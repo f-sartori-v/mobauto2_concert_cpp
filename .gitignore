@@ -1,2 +1,20 @@
-.DS_Store
+# C++ build
+build/
+*.o
+*.out
+*.exe
+
+# IDE
 .idea/
+*.iml
+
+# Python (if you use orchestration)
+*.pyc
+__pycache__/
+.venv/
+env/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
