@@ -1,16 +1,30 @@
-# This is a sample Python script.
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+import yaml
+import subprocess
 
+from utils.parser import load_demand
+from utils.visualization import extract_schedule, plot_gantt
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+def main():
+    # Load configuration
+    with open("data/config.yaml", "r") as f:
+        config = yaml.safe_load(f)
 
+    # Load data
+    demand_df = load_demand(config["data"]["demand_file"], config["time_res"])
+    demand_df.to_csv("data/demand.csv", index=False)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    # Call the C++ solver
+    subprocess.run([
+        "./cpp/solver",
+        "data/config.yaml",
+        "data/demand.csv"
+        "solution.json"
+    ], check=True)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    #schedule_df = extract_schedule("solution.json")
+
+if __name__ == "__main__":
+    main()

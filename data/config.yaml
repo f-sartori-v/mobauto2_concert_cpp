@@ -1,0 +1,33 @@
+# General configuration
+project_name: MOB-AUTO2 Shuttle Scheduling
+start_time: 0
+end_time: 720
+time_res: 30
+
+# Fleet and shuttle specs
+fleet:
+  num_shuttles: 2
+  seat_capacity: 15
+  battery_capacity_km: 150
+  trip_distance_km: 30
+  trip_duration_min: 30
+  min_partial_minutes: 30
+  min_full_minutes: 120
+  recharge_only_at_hub: true
+  soc_threshold: 100
+
+# Solver configuration (CPO)
+solver:
+  time_limit: 600
+  log_verbosity: 'Terse'        # values: quiet, terse, normal, verbose
+  search_type: 'Restart'      # values = ('DepthFirst', 'Restart', 'MultiPoint', 'IterativeDiving', 'Neighborhood', 'Auto')
+
+# Input paths
+data:
+  demand_file: "data/opts.csv"
+
+# Visualisation
+output:
+  plot_schedule: true
+  save_plot: false
+  output_path: "results/"
